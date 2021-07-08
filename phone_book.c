@@ -196,16 +196,16 @@ void add(char *name, char *phone) {
 }
 
 void list(FILE *db_file) {
-  int count = 0;
+  int c = 0;
   entry *p = load_entries(db_file);
   entry *base = p;
   while (p!=NULL) {
     printf("%-20s : %10s\n", p->name, p->phone);
     p=p->next;
-    count++;
+    c++;
   }
   /* TBD print total count */
-  printf("Total entries :  %i\n", count);
+  printf("Total entries :  %i\n", c);
   free_entries(base);
 }
 
@@ -256,15 +256,15 @@ int delete(FILE *db_file, char *name) {
 int search(FILE *db_file, char *name){
   entry *p = load_entries(db_file);
   entry *base = p;
-  int found = 0;
+  int f = 0;
   while (p!=NULL) {
     if (strcmp(p->name, name) == 0) {
       printf("%10s\n", p->phone);
-      found++;
+      f++;
       break;
     }
   p=p->next;
   }
   free_entries(base);
-  return found;
+  return f;
 }
