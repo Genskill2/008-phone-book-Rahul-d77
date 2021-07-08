@@ -193,7 +193,7 @@ void list(FILE *db_file) {
     count++;
   }
   /* TBD print total count */
-  printf("Total Entries : %i\n", count) ;
+  printf("Total Entries : %i\n", count);
   free_entries(base);
 }
 
@@ -246,19 +246,19 @@ int delete(FILE *db_file, char *name) {
 
 int search(FILE *db_file, char *name) 
 {
-  entry *p = load_entries(db_file) ;
+  entry *p = load_entries(db_file);
   entry *base = p;
   int f =0;
   while(p!=NULL) 
   {
     if(strcmp(p->name, name) ==0) 
     {
-      printf("%12s\n", p->phone) ;
+      printf("%12s\n", p->phone);
       f++;
       break;
     }
     p = p->next;
   }
- free_entries(base) ;
+ free_entries(base);
  return f;
 }
