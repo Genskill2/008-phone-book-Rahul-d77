@@ -94,6 +94,14 @@ FILE *open_db_file() {
   
 void free_entries(entry *p) {
   /* TBD */
+  entry *temp = NULL;
+  while(p! = NULL) 
+  {
+    temp = p->next;
+    free(p) ;
+    p = temp;
+  }
+  p = NULL;
   printf("Memory is not being freed. This needs to be fixed!\n");  
 }
 
@@ -176,13 +184,16 @@ void add(char *name, char *phone) {
 }
 
 void list(FILE *db_file) {
+  int count = 0;
   entry *p = load_entries(db_file);
   entry *base = p;
   while (p!=NULL) {
     printf("%-20s : %10s\n", p->name, p->phone);
     p=p->next;
+    count++;
   }
   /* TBD print total count */
+  printf("Total Entries : %i\n", count) ;
   free_entries(base);
 }
 
@@ -207,9 +218,47 @@ int delete(FILE *db_file, char *name) {
       */
 
       /* TBD */
+      if(prev==NULL) 
+      {
+        del = p;
+        base = p->next;
+        p = p->next;
+        free(del) ;
+      }
+      else
+      {
+        prev->next = p->next;
+        free(p) ;
+       }
+      deleted++;
+      break;
     }
+     if(! deleted) 
+      {
+        prev = p;
+        p = p->next;
+      }
   }
   write_all_entries(base);
   free_entries(base);
   return deleted;
+}
+
+int search(FILE *db_file, char *name) 
+{
+  entry *p = load_entries(db_file) ;
+  entry *base = p;
+  int f =0;
+  while(p! =NULL) 
+  {
+    if(strcmp(p->name, name) ==0) 
+    {
+      printf("%12s\n", p->phone) ;
+      f++;
+      break;
+    }
+    p = p->next;
+  }
+ free_entries(base) ;
+ return f;
 }
