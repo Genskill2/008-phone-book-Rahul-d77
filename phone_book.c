@@ -95,7 +95,7 @@ FILE *open_db_file() {
 void free_entries(entry *p) {
   /* TBD */
   entry *temp = NULL;
-  while(p! = NULL) 
+  while(p!= NULL) 
   {
     temp = p->next;
     free(p) ;
@@ -233,7 +233,7 @@ int delete(FILE *db_file, char *name) {
       deleted++;
       break;
     }
-     if(! deleted) 
+     if(!deleted) 
       {
         prev = p;
         p = p->next;
@@ -249,7 +249,7 @@ int search(FILE *db_file, char *name)
   entry *p = load_entries(db_file) ;
   entry *base = p;
   int f =0;
-  while(p! =NULL) 
+  while(p!=NULL) 
   {
     if(strcmp(p->name, name) ==0) 
     {
