@@ -62,19 +62,17 @@ int main(int argc, char *argv[]) {
     fclose(fp);
     exit(0);
   } else if (strcmp(argv[1], "search") == 0) {  /* Handle search */
-     if(argc!=3)
-    {
-      print_usage("Improper arguments for search ", argv[0]);
+		if (argc != 3) {
+      print_usage("Improper arguments for search", argv[0]);
       exit(1);
-    }
-    FILE *fp = open_db_file();
-    char *name = argv[2];
-    if(!search(fp, name)) 
-     {
-       printf("no match\n");
-       fclose(fp);
-       exit(1);
-     }
+		}
+		FILE *fp = open_db_file();
+		char *name = argv[2];
+    if (!search(fp, name)){
+			printf("no match\n");
+      fclose(fp);
+      exit(1);
+		}
     fclose(fp);
     exit(0);
      //printf("NOT IMPLEMENTED!\n"); /* TBD  */
@@ -109,12 +107,11 @@ FILE *open_db_file() {
   
 void free_entries(entry *p) {
   /* TBD */
-  entry *temp = NULL;
-  while(p!= NULL) 
-  {
-    temp = p->next;
-    free(p) ;
-    p = temp;
+  entry *tmp = NULL;
+  while (p != NULL) {
+    tmp = p->next;
+    free(p);
+    p = tmp;
   }
   p = NULL;
     // printf("Memory is not being freed. This needs to be fixed!\n");  
@@ -208,7 +205,7 @@ void list(FILE *db_file) {
     count++;
   }
   /* TBD print total count */
-  printf("Total entries : %i\n",count);
+  printf("Total entries :  %i\n", count);
   free_entries(base);
 }
 
@@ -233,47 +230,41 @@ int delete(FILE *db_file, char *name) {
       */
 
       /* TBD */
-      if(prev==NULL) 
-      {
+       if (prev == NULL){
         del = p;
         base = p->next;
         p = p->next;
-        free(del) ;
+        free(del);
       }
-      else
-      {
+      else{
         prev->next = p->next;
-        free(p) ;
-       }
+        free(p);
+      }
       deleted++;
       break;
     }
-     if(!deleted) 
-      {
-        prev = p;
-        p = p->next;
-      }
+    if (!deleted){
+    prev = p;
+    p = p->next;
+    }
   }
   write_all_entries(base);
   free_entries(base);
   return deleted;
 }
 
-int search(FILE *db_file, char *name) 
-{
+int search(FILE *db_file, char *name){
   entry *p = load_entries(db_file);
   entry *base = p;
-  int f =0;
-  while(p!=NULL) 
-  {
-    if(strcmp(p->name, name) ==0) 
-    {
+  int found = 0;
+  while (p!=NULL) {
+    if (strcmp(p->name, name) == 0) {
       printf("%10s\n", p->phone);
-      f++;
+      found++;
       break;
     }
-    p = p->next;
+  p=p->next;
   }
- free_entries(base);
- return f;
+  free_entries(base);
+  return found;
 }
