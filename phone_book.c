@@ -208,7 +208,7 @@ void list(FILE *db_file) {
     count++;
   }
   /* TBD print total count */
-  printf("Total Entries : %i\n",count);
+  printf("Total entries : %i\n",count);
   free_entries(base);
 }
 
@@ -268,7 +268,7 @@ int search(FILE *db_file, char *name)
   {
     if(strcmp(p->name, name) ==0) 
     {
-      printf("%12s\n", p->phone);
+      printf("%10s\n", p->phone);
       f++;
       break;
     }
